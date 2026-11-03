@@ -937,9 +937,7 @@ function switchView(name){
   const tgt=$('#view-'+name);if(tgt)tgt.classList.add('active');
   const nav=document.querySelector(`.nav-item[data-view="${name}"]`);if(nav)nav.classList.add('active');
   window.scrollTo({top:0,behavior:'smooth'});
-  if(name==='home')setTimeout(()=>$('#searchHome')?.focus({preventScroll:true}),300);
-  if(name==='cats')setTimeout(()=>$('#searchCat')?.focus({preventScroll:true}),300);
-  if(name==='promos'&&promoData.length)setTimeout(()=>$('#searchPromo')?.focus({preventScroll:true}),300);
+  // Klavye otomatik açılmasın — kullanıcı arama kutusuna tıklayınca açılır
 }
 $$('.nav-item').forEach(n=>n.addEventListener('click',()=>switchView(n.dataset.view)));
 
@@ -980,6 +978,16 @@ $('#copyMailBtn').addEventListener('click',e=>{
 
 $('#openPrivacyBtn').addEventListener('click',()=>openModal('privacyModal'));
 $('#openTermsBtn').addEventListener('click',()=>openModal('termsModal'));
+  
+/* === YENİ: Sayfa dışına tıklayınca klavye kapansın === */
+document.addEventListener('click', (e) => {
+  const tag = e.target.tagName;
+  if (tag !== 'INPUT' && tag !== 'TEXTAREA') {
+    if (document.activeElement && document.activeElement.blur) {
+      document.activeElement.blur();
+    }
+  }
+});
 
 document.addEventListener('DOMContentLoaded',()=>{
   let st='dark';try{st=localStorage.getItem('aps_theme')||'dark'}catch(_){}setTheme(st);

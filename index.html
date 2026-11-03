@@ -3,49 +3,71 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<meta name="theme-color" content="#0f1115">
-<title>Affiliate Product Showcase - Smart Shopping Tips & Campaigns</title>
-<meta name="description" content="Comprehensive guide for the best online shopping experience. Membership benefits, campaigns, discounts and purchasing tips.">
-<meta name="keywords" content="online shopping, membership benefits, campaigns, discount guide, shopping tips">
+<meta name="theme-color" content="#0f1115" id="themeColorMeta">
+<title>Affiliate Product Showcase</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;-webkit-tap-highlight-color:transparent}
 :root{
 --primary:#FF9900;--primary-dark:#e68a00;
---secondary:#4da6ff;--secondary-dark:#3d8bdb;
---accent:#ff6b6b;--success:#2ecc71;
+--secondary:#4da6ff;--accent:#ff6b6b;--success:#2ecc71;
 --bg-primary:#0f1115;--bg-secondary:#1a1d23;--bg-tertiary:#242730;
 --text-primary:#e8eaed;--text-secondary:#b0b5be;--text-muted:#8a8f98;
 --card-bg:#1e2128;--card-border:#2d3139;
 --header-h:60px;--nav-h:64px;
 --safe-bottom:env(safe-area-inset-bottom,0px);
 --header-gradient:linear-gradient(90deg,rgba(255,153,0,.12),rgba(77,166,255,.12));
+--modal-bg:#1e2128;
 }
-body{background:var(--bg-primary);min-height:100vh;color:var(--text-primary);overflow-x:hidden;padding-bottom:calc(var(--nav-h) + var(--safe-bottom) + 10px)}
+body.light{
+--bg-primary:#f5f6f8;--bg-secondary:#ffffff;--bg-tertiary:#eef0f3;
+--text-primary:#1a1d23;--text-secondary:#4a4f5a;--text-muted:#7a8090;
+--card-bg:#ffffff;--card-border:#e0e3e8;
+--header-gradient:linear-gradient(90deg,rgba(255,153,0,.08),rgba(77,166,255,.08));
+--modal-bg:#ffffff;
+}
+body{background:var(--bg-primary);min-height:100vh;color:var(--text-primary);overflow-x:hidden;padding-bottom:calc(var(--nav-h) + var(--safe-bottom) + 10px);transition:background .4s,color .4s}
 
-/* ===== APP HEADER ===== */
-.app-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:rgba(15,17,21,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--card-border);display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:900}
+/* ===== ARKA PLAN ANİMASYON ===== */
+.bg-anim{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;overflow:hidden;pointer-events:none}
+.bg-blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.35;animation:blobFloat 24s infinite ease-in-out}
+body.light .bg-blob{opacity:.25}
+.bg-blob.b1{width:280px;height:280px;background:#FF9900;top:-80px;left:-80px;animation-delay:0s}
+.bg-blob.b2{width:240px;height:240px;background:#4da6ff;bottom:10%;right:-80px;animation-delay:-6s}
+.bg-blob.b3{width:200px;height:200px;background:#ff6b6b;top:40%;left:-60px;animation-delay:-12s}
+.bg-blob.b4{width:180px;height:180px;background:#8a2be2;bottom:-60px;left:30%;animation-delay:-18s}
+@keyframes blobFloat{0%,100%{transform:translate(0,0) scale(1)}25%{transform:translate(40px,-30px) scale(1.1)}50%{transform:translate(-30px,40px) scale(.95)}75%{transform:translate(20px,20px) scale(1.05)}}
+.bg-grid{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;pointer-events:none;opacity:.03;background-image:linear-gradient(var(--text-primary) 1px,transparent 1px),linear-gradient(90deg,var(--text-primary) 1px,transparent 1px);background-size:40px 40px;animation:gridMove 60s linear infinite}
+@keyframes gridMove{0%{background-position:0 0}100%{background-position:40px 40px}}
+
+/* ===== HEADER ===== */
+.app-header{position:fixed;top:0;left:0;right:0;height:var(--header-h);background:color-mix(in srgb,var(--bg-primary) 92%,transparent);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid var(--card-border);display:flex;align-items:center;justify-content:space-between;padding:0 16px;z-index:900}
 .app-header .brand{display:flex;align-items:center;gap:10px;min-width:0}
-.app-header .brand-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#FF9900,#FF6B6B);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;flex-shrink:0}
+.app-header .brand-icon{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#FF9900,#FF6B6B);display:flex;align-items:center;justify-content:center;color:#fff;font-size:1rem;flex-shrink:0;box-shadow:0 4px 12px rgba(255,153,0,.3)}
 .app-header .brand-name{font-size:.95rem;font-weight:800;background:linear-gradient(to right,#FF9900,#4da6ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.app-header .header-actions{display:flex;gap:8px;flex-shrink:0}
-.app-header .header-btn{width:38px;height:38px;border-radius:10px;background:var(--bg-tertiary);border:1px solid var(--card-border);color:var(--text-secondary);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem}
+.app-header .header-btn{width:38px;height:38px;border-radius:10px;background:var(--bg-tertiary);border:1px solid var(--card-border);color:var(--text-secondary);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;transition:.3s}
+.app-header .header-btn:active{transform:scale(.92)}
+.app-header .header-btn.spin i{transition:transform .6s}
+.app-header .header-btn.spin:active i{transform:rotate(180deg)}
 
 /* ===== MAIN ===== */
 .app-main{padding-top:calc(var(--header-h) + 12px);padding-left:14px;padding-right:14px;max-width:900px;margin:0 auto}
-.view{display:none;animation:fadeIn .3s ease}
+.view{display:none;animation:fadeIn .35s ease}
 .view.active{display:block}
-@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 
 /* ===== HERO ===== */
-.hero{background:linear-gradient(135deg,rgba(255,153,0,.12),rgba(77,166,255,.12));border:1px solid var(--card-border);border-radius:18px;padding:22px 18px;margin-bottom:16px;text-align:center}
+.hero{background:linear-gradient(135deg,rgba(255,153,0,.12),rgba(77,166,255,.12));border:1px solid var(--card-border);border-radius:18px;padding:22px 18px;margin-bottom:16px;text-align:center;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent,rgba(255,153,0,.08),transparent,rgba(77,166,255,.08),transparent);animation:heroSpin 20s linear infinite}
+@keyframes heroSpin{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+.hero h1,.hero p{position:relative;z-index:1}
 .hero h1{font-size:1.25rem;font-weight:800;background:linear-gradient(to right,#FF9900,#FF6B6B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:8px;line-height:1.3}
 .hero p{font-size:.85rem;color:var(--text-secondary);line-height:1.6}
 
 /* ===== SEARCH ===== */
 .search-wrap{position:relative;margin-bottom:14px}
 .search-box{width:100%;padding:14px 46px 14px 16px;border-radius:14px;background:var(--bg-tertiary);border:1px solid var(--card-border);color:var(--text-primary);font-size:.95rem;outline:none;transition:.2s}
-.search-box:focus{border-color:var(--primary)}
+.search-box:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(255,153,0,.15)}
 .search-box::placeholder{color:var(--text-muted)}
 .search-wrap .search-ico{position:absolute;right:16px;top:50%;transform:translateY(-50%);color:var(--text-muted);font-size:1rem}
 
@@ -58,14 +80,15 @@ body{background:var(--bg-primary);min-height:100vh;color:var(--text-primary);ove
 .chip-row{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;margin-bottom:14px;scrollbar-width:none}
 .chip-row::-webkit-scrollbar{display:none}
 .chip{flex-shrink:0;padding:8px 16px;border-radius:20px;background:var(--bg-tertiary);border:1px solid var(--card-border);color:var(--text-secondary);font-size:.8rem;font-weight:600;cursor:pointer;transition:.2s;white-space:nowrap}
-.chip.active{background:var(--primary);color:#000;border-color:var(--primary)}
+.chip.active{background:var(--primary);color:#000;border-color:var(--primary);box-shadow:0 4px 12px rgba(255,153,0,.3)}
 
-/* ===== CATEGORY CARD (accordion) ===== */
+/* ===== CATEGORY CARD ===== */
 .category{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;overflow:hidden;margin-bottom:12px;transition:.2s}
 .category-header{padding:16px;display:flex;align-items:center;gap:12px;cursor:pointer;background:var(--header-gradient);position:relative}
 .category-header:active{background:var(--bg-secondary)}
 .category-title{display:flex;align-items:center;gap:12px;flex:1;min-width:0}
-.category-icon{width:48px;height:48px;border-radius:12px;background:rgba(255,153,0,.15);display:flex;align-items:center;justify-content:center;font-size:1.25rem;color:var(--primary);flex-shrink:0}
+.category-icon{width:48px;height:48px;border-radius:12px;background:rgba(255,153,0,.15);display:flex;align-items:center;justify-content:center;font-size:1.25rem;color:var(--primary);flex-shrink:0;transition:.3s}
+.category-header:active .category-icon{transform:scale(.95) rotate(-5deg)}
 .category-name{flex:1;min-width:0}
 .category-name h2{font-size:1rem;font-weight:800;margin-bottom:3px;color:var(--text-primary);line-height:1.3;word-wrap:break-word}
 .category-name p{font-size:.76rem;color:var(--text-muted);line-height:1.4;word-wrap:break-word}
@@ -93,6 +116,17 @@ body{background:var(--bg-primary);min-height:100vh;color:var(--text-primary);ove
 .share-btn.copied{background:var(--success);color:#000;border-color:var(--success)}
 .link-arrow{color:var(--text-muted);font-size:.85rem;flex-shrink:0}
 
+/* ===== AMAZON CATEGORY GRID ===== */
+.az-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:16px}
+.az-tile{background:var(--card-bg);border:1px solid var(--card-border);border-radius:14px;padding:14px 10px;text-align:center;cursor:pointer;transition:.2s;position:relative;overflow:hidden}
+.az-tile:active{transform:scale(.96);background:var(--bg-secondary)}
+.az-tile::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,#FF9900,#FF6B6B);opacity:0;transition:.3s}
+.az-tile:active::before{opacity:1}
+.az-tile .az-ico{width:52px;height:52px;margin:0 auto 8px;border-radius:14px;background:rgba(255,153,0,.12);display:flex;align-items:center;justify-content:center;color:var(--primary);font-size:1.4rem;transition:.3s}
+.az-tile:active .az-ico{transform:scale(1.1) rotate(-5deg)}
+.az-tile .az-name{font-size:.82rem;font-weight:700;color:var(--text-primary);line-height:1.3}
+.az-tile .az-count{font-size:.68rem;color:var(--text-muted);margin-top:3px}
+
 /* ===== PROMO CARD ===== */
 .promo-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:14px;margin-bottom:12px;position:relative;overflow:hidden}
 .promo-card::before{content:'';position:absolute;left:0;top:0;bottom:0;width:4px;background:linear-gradient(180deg,#FF9900,#FF6B6B)}
@@ -107,7 +141,7 @@ body{background:var(--bg-primary);min-height:100vh;color:var(--text-primary);ove
 .promo-copy:active{transform:scale(.95)}
 .promo-copy.copied{background:var(--success)}
 
-/* ===== CONTENT CARDS (intro, blog, info) ===== */
+/* ===== CONTENT CARDS ===== */
 .content-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:18px;margin:16px 0}
 .content-card h2{font-size:1.1rem;font-weight:800;margin-bottom:14px;background:linear-gradient(to right,#FF9900,#FF6B6B);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-align:center;line-height:1.4}
 .content-card h3{font-size:.98rem;color:var(--primary);margin:16px 0 8px;font-weight:800}
@@ -128,13 +162,63 @@ body{background:var(--bg-primary);min-height:100vh;color:var(--text-primary);ove
 .company-highlight-item h3{font-size:.95rem;color:var(--text-primary);margin-bottom:6px;font-weight:800}
 .company-highlight-item p{font-size:.78rem;color:var(--text-muted);line-height:1.5;margin:0}
 
+/* ===== ACTION CARD (Rate/Contact/Important/Privacy/Terms) ===== */
+.action-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:18px;margin-bottom:12px}
+.action-card h3{font-size:1rem;color:var(--primary);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.action-card p{font-size:.86rem;color:var(--text-secondary);line-height:1.7;margin-bottom:10px}
+.action-card ul{margin-left:18px;margin-bottom:10px}
+.action-card li{font-size:.84rem;color:var(--text-secondary);line-height:1.7;margin-bottom:6px}
+.action-card .disclosure{background:rgba(255,153,0,.08);border-left:4px solid var(--primary);padding:12px 14px;border-radius:10px;font-size:.82rem;color:var(--text-secondary);line-height:1.6;margin-top:10px}
+.important-card{border-left:4px solid var(--accent)}
+.important-card h3{color:var(--accent)}
+
+/* stars */
+.stars-row{display:flex;gap:8px;justify-content:center;margin:14px 0}
+.star-btn{background:none;border:none;font-size:2rem;color:var(--text-muted);cursor:pointer;transition:.2s;padding:0 4px}
+.star-btn:hover,.star-btn.active{color:#FFD700;transform:scale(1.15)}
+.rate-hint{text-align:center;font-size:.78rem;color:var(--text-muted);margin-top:8px}
+
+/* contact row */
+.contact-row{display:flex;align-items:center;gap:8px;background:var(--bg-tertiary);border:1px solid var(--card-border);border-radius:12px;padding:12px 14px;margin-top:10px}
+.contact-row a{flex:1;color:var(--primary);text-decoration:none;font-weight:700;font-size:.88rem;word-break:break-all}
+.contact-row a:hover{text-decoration:underline}
+.copy-mail-btn{width:38px;height:38px;border-radius:10px;background:var(--primary);color:#000;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.95rem;flex-shrink:0;transition:.2s}
+.copy-mail-btn:active{transform:scale(.92)}
+.copy-mail-btn.copied{background:var(--success)}
+
+/* link buttons for privacy/terms */
+.link-btn-row{display:flex;flex-direction:column;gap:8px;margin-top:10px}
+.link-btn{display:flex;align-items:center;justify-content:space-between;background:var(--bg-tertiary);border:1px solid var(--card-border);border-radius:12px;padding:14px 16px;color:var(--text-primary);font-weight:700;font-size:.88rem;cursor:pointer;transition:.2s}
+.link-btn:active{background:var(--bg-secondary);transform:scale(.99)}
+.link-btn i{color:var(--primary);font-size:.9rem}
+
 /* ===== ABOUT ===== */
 .about-card{background:var(--card-bg);border:1px solid var(--card-border);border-radius:16px;padding:18px;margin-bottom:12px}
 .about-card h3{font-size:1rem;color:var(--primary);margin-bottom:10px;display:flex;align-items:center;gap:8px}
 .about-card p{font-size:.86rem;color:var(--text-secondary);line-height:1.7;margin-bottom:10px}
-.about-card ul{margin-left:18px;margin-bottom:10px}
-.about-card li{font-size:.84rem;color:var(--text-secondary);line-height:1.7;margin-bottom:6px}
-.about-card .disclosure{background:rgba(255,153,0,.08);border-left:4px solid var(--primary);padding:12px 14px;border-radius:10px;font-size:.82rem;color:var(--text-secondary);line-height:1.6;margin-top:10px}
+
+/* ===== MODAL (generic) ===== */
+.modal-overlay{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:flex;align-items:center;justify-content:center;padding:20px;z-index:2000;opacity:0;visibility:hidden;transition:.3s}
+.modal-overlay.active{opacity:1;visibility:visible}
+.modal-box{background:var(--modal-bg);border:1px solid var(--card-border);border-radius:20px;width:100%;max-width:420px;max-height:80vh;display:flex;flex-direction:column;overflow:hidden;transform:scale(.9) translateY(20px);transition:.3s cubic-bezier(.175,.885,.32,1.275);box-shadow:0 30px 80px rgba(0,0,0,.5)}
+.modal-overlay.active .modal-box{transform:scale(1) translateY(0)}
+.modal-head{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;border-bottom:1px solid var(--card-border);background:var(--header-gradient)}
+.modal-head h2{font-size:1.05rem;font-weight:800;color:var(--text-primary);display:flex;align-items:center;gap:8px}
+.modal-head h2 i{color:var(--primary)}
+.modal-close{width:34px;height:34px;border-radius:10px;background:var(--bg-tertiary);border:1px solid var(--card-border);color:var(--text-secondary);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:.95rem;transition:.2s}
+.modal-close:active{transform:scale(.9)}
+.modal-body{padding:18px 20px;overflow-y:auto;flex:1}
+.modal-body p,.modal-body li{font-size:.86rem;line-height:1.7;color:var(--text-secondary);margin-bottom:10px}
+.modal-body h3{font-size:.95rem;color:var(--primary);margin:14px 0 8px;font-weight:800}
+.modal-body ul{margin-left:18px}
+
+/* settings */
+.settings-group{margin-bottom:20px}
+.settings-group label{display:block;font-size:.75rem;font-weight:800;color:var(--text-muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px}
+.option-row{display:flex;gap:8px}
+.opt-btn{flex:1;padding:12px;border-radius:12px;background:var(--bg-tertiary);border:1.5px solid var(--card-border);color:var(--text-secondary);font-weight:700;font-size:.85rem;cursor:pointer;transition:.2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.opt-btn.active{border-color:var(--primary);background:rgba(255,153,0,.12);color:var(--primary)}
+.opt-btn:active{transform:scale(.97)}
 
 /* ===== EMPTY ===== */
 .empty{text-align:center;padding:40px 20px;color:var(--text-muted)}
@@ -142,7 +226,7 @@ body{background:var(--bg-primary);min-height:100vh;color:var(--text-primary);ove
 .empty p{font-size:.9rem}
 
 /* ===== BOTTOM NAV ===== */
-.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:calc(var(--nav-h) + var(--safe-bottom));padding-bottom:var(--safe-bottom);background:rgba(15,17,21,.97);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--card-border);display:flex;z-index:950}
+.bottom-nav{position:fixed;bottom:0;left:0;right:0;height:calc(var(--nav-h) + var(--safe-bottom));padding-bottom:var(--safe-bottom);background:color-mix(in srgb,var(--bg-primary) 96%,transparent);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--card-border);display:flex;z-index:950}
 .nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:var(--text-muted);cursor:pointer;transition:.2s;position:relative;font-size:.62rem;font-weight:600}
 .nav-item i{font-size:1.15rem;transition:.2s}
 .nav-item.active{color:var(--primary)}
@@ -153,32 +237,37 @@ body{background:var(--bg-primary);min-height:100vh;color:var(--text-primary);ove
 .toast{position:fixed;bottom:calc(var(--nav-h) + var(--safe-bottom) + 16px);left:50%;transform:translate(-50%,20px);background:var(--success);color:#000;padding:11px 20px;border-radius:12px;font-weight:700;font-size:.85rem;display:flex;align-items:center;gap:8px;box-shadow:0 10px 30px rgba(0,0,0,.5);opacity:0;pointer-events:none;transition:.3s;z-index:2000;white-space:nowrap}
 .toast.show{opacity:1;transform:translate(-50%,0)}
 
-/* ===== FOOTER ===== */
-.app-footer{text-align:center;padding:24px 16px;color:var(--text-muted);font-size:.75rem;border-top:1px solid var(--card-border);margin-top:20px;line-height:1.6}
-
 @media(min-width:600px){
 .hero h1{font-size:1.5rem}
 .company-highlights{grid-template-columns:repeat(2,1fr)}
+.az-grid{grid-template-columns:repeat(3,1fr)}
 }
 </style>
 </head>
 <body>
 
-<!-- ===== HEADER ===== -->
+<!-- BG ANIM -->
+<div class="bg-anim">
+  <div class="bg-blob b1"></div>
+  <div class="bg-blob b2"></div>
+  <div class="bg-blob b3"></div>
+  <div class="bg-blob b4"></div>
+</div>
+<div class="bg-grid"></div>
+
+<!-- HEADER -->
 <header class="app-header">
   <div class="brand">
     <div class="brand-icon"><i class="fas fa-tags"></i></div>
     <div class="brand-name">Affiliate Product Showcase</div>
   </div>
-  <div class="header-actions">
-    <div class="header-btn" id="headerInfoBtn"><i class="fas fa-info"></i></div>
-  </div>
+  <button class="header-btn spin" id="settingsBtn" aria-label="Settings"><i class="fas fa-cog"></i></button>
 </header>
 
-<!-- ===== MAIN ===== -->
+<!-- MAIN -->
 <main class="app-main">
 
-  <!-- ==================== ANA SAYFA ==================== -->
+  <!-- ========== HOME ========== -->
   <section class="view active" id="view-home">
     <div class="hero">
       <h1>Discount Opportunity Campaign Universe</h1>
@@ -190,21 +279,40 @@ body{background:var(--bg-primary);min-height:100vh;color:var(--text-primary);ove
       <i class="fas fa-search search-ico"></i>
     </div>
 
-    <div class="section-title"><i class="fas fa-th-large"></i> Categories <span class="count" id="homeCount">0</span></div>
+    <div class="section-title"><i class="fas fa-th-large"></i> All Categories <span class="count" id="homeCount">0</span></div>
     <div class="chip-row" id="homeChips"></div>
     <div id="homeCategories"></div>
+
+    <div class="section-title"><i class="fas fa-tags"></i> Active Promo Codes</div>
+    <div id="homePromos"></div>
+
+    <div class="content-card">
+      <h2>🛍️ Welcome to Discount Opportunity Campaign Universe</h2>
+      <p>We created this comprehensive shopping guide after years of experience in online retail and consumer behavior analysis. Our team works tirelessly to bring you the most relevant, up-to-date, and valuable shopping resources available.</p>
+      <div class="company-highlights">
+        <div class="company-highlight-item"><i class="fas fa-check-circle"></i><h3>Verified Links</h3><p>Every link is verified to official products and services.</p></div>
+        <div class="company-highlight-item"><i class="fas fa-clock"></i><h3>Daily Updates</h3><p>Deals and promotions updated daily.</p></div>
+        <div class="company-highlight-item"><i class="fas fa-tag"></i><h3>Exclusive Access</h3><p>Early access to sales and member-only discounts.</p></div>
+        <div class="company-highlight-item"><i class="fas fa-star"></i><h3>Curated Selection</h3><p>Only the best products, tested and reviewed.</p></div>
+      </div>
+    </div>
   </section>
 
-  <!-- ==================== KATEGORİLER ==================== -->
+  <!-- ========== CATEGORIES (Amazon categories) ========== -->
   <section class="view" id="view-cats">
     <div class="hero">
-      <h1>All Categories</h1>
-      <p>Browse all products and campaigns organized by category.</p>
+      <h1>Shop by Category</h1>
+      <p>Browse all product categories and find exactly what you're looking for.</p>
     </div>
-    <div id="catList"></div>
+    <div class="search-wrap">
+      <input type="text" class="search-box" id="searchCat" placeholder="Search category...">
+      <i class="fas fa-search search-ico"></i>
+    </div>
+    <div class="az-grid" id="azGrid"></div>
+    <div id="catDetail"></div>
   </section>
 
-  <!-- ==================== PROMOSYONLAR ==================== -->
+  <!-- ========== PROMOS ========== -->
   <section class="view" id="view-promos">
     <div class="hero">
       <h1>Promo &amp; Discount Codes 🎁</h1>
@@ -218,47 +326,94 @@ body{background:var(--bg-primary);min-height:100vh;color:var(--text-primary);ove
     <div id="promoList"></div>
   </section>
 
-  <!-- ==================== HAKKINDA ==================== -->
+  <!-- ========== ABOUT ========== -->
   <section class="view" id="view-about">
     <div class="hero">
       <h1>About Affiliate Product Showcase</h1>
       <p>Everything you need to know about our shopping guide.</p>
     </div>
 
-    <!-- Company intro -->
-    <div class="content-card">
-      <h2>🛍️ Welcome to Discount Opportunity Campaign Universe</h2>
-      <p>We created this comprehensive shopping guide after years of experience in online retail and consumer behavior analysis. Our team works tirelessly to bring you the most relevant, up-to-date, and valuable shopping resources available. We believe that smart shopping should be accessible to everyone, which is why we've organized thousands of products and services into easy-to-navigate categories.</p>
+    <!-- RATE THE APP -->
+    <div class="action-card">
+      <h3><i class="fas fa-star"></i> Rate the App</h3>
+      <p>Enjoying the app? Give us a 5-star rating on Google Play — it helps us a lot!</p>
+      <div class="stars-row" id="starsRow">
+        <button class="star-btn" data-star="1" aria-label="1 star">★</button>
+        <button class="star-btn" data-star="2" aria-label="2 stars">★</button>
+        <button class="star-btn" data-star="3" aria-label="3 stars">★</button>
+        <button class="star-btn" data-star="4" aria-label="4 stars">★</button>
+        <button class="star-btn" data-star="5" aria-label="5 stars">★</button>
+      </div>
+      <p class="rate-hint">Tap a star to rate us on Google Play</p>
+    </div>
 
-      <div class="company-highlights">
-        <div class="company-highlight-item">
-          <i class="fas fa-check-circle"></i>
-          <h3>Verified Links</h3>
-          <p>We verify every link to ensure you're directed to official products and services. No broken links, no redirects.</p>
-        </div>
-        <div class="company-highlight-item">
-          <i class="fas fa-clock"></i>
-          <h3>Daily Updates</h3>
-          <p>Our team updates deals and promotions daily. We monitor thousands of products so you don't have to.</p>
-        </div>
-        <div class="company-highlight-item">
-          <i class="fas fa-tag"></i>
-          <h3>Exclusive Access</h3>
-          <p>We've partnered with major platforms to bring you early access to sales and member-only discounts.</p>
-        </div>
-        <div class="company-highlight-item">
-          <i class="fas fa-star"></i>
-          <h3>Curated Selection</h3>
-          <p>We don't list everything - we curate only the best products based on real customer reviews and our own testing.</p>
-        </div>
+    <!-- CONTACT -->
+    <div class="action-card">
+      <h3><i class="fas fa-envelope"></i> Contact</h3>
+      <p>Have questions, suggestions or feedback? Reach out to us anytime.</p>
+      <div class="contact-row">
+        <a href="mailto:aastudio42@gmail.com">aastudio42@gmail.com</a>
+        <button class="copy-mail-btn" id="copyMailBtn" aria-label="Copy email"><i class="fas fa-copy"></i></button>
       </div>
     </div>
 
-    <!-- Blog intro -->
+    <!-- IMPORTANT -->
+    <div class="action-card important-card">
+      <h3><i class="fas fa-exclamation-triangle"></i> Important</h3>
+      <p><strong>Keep the app updated!</strong> To continue enjoying the latest deals, promo codes and features, please make sure you always use the most recent version of the app. Outdated versions may not display current offers correctly.</p>
+      <div class="disclosure">
+        We regularly improve the app with new features, bug fixes and updated content. Enable automatic updates on your device to never miss a deal.
+      </div>
+    </div>
+
+    <!-- PRIVACY / TERMS -->
+    <div class="action-card">
+      <h3><i class="fas fa-file-alt"></i> Legal</h3>
+      <div class="link-btn-row">
+        <button class="link-btn" id="openPrivacyBtn">
+          <span><i class="fas fa-shield-alt" style="margin-right:8px"></i>Privacy Policy</span>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+        <button class="link-btn" id="openTermsBtn">
+          <span><i class="fas fa-gavel" style="margin-right:8px"></i>Terms &amp; Conditions</span>
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- ABOUT THIS SITE -->
+    <div class="content-card">
+      <h2>Information</h2>
+      <div class="highlight-box">
+        <h3>About This Site</h3>
+        <p>We created this site to help shoppers discover the best products and services available online. Our team carefully selects and organizes links to various shopping platforms to make your experience easier and more enjoyable.</p>
+      </div>
+      <h3>Our Mission: Helping You Find the Best Deals</h3>
+      <p>Our primary goal is to help you discover the vast selection of products, services, and special offers available online. We curated these links to make your shopping experience more convenient and to highlight interesting campaigns and promotions you might otherwise miss.</p>
+      <h3>How We Help You Save</h3>
+      <p>• We organize extensive product catalogs into easy-to-navigate categories<br>
+        • We highlight special promotions and limited-time offers<br>
+        • We provide detailed descriptions to help you make informed decisions<br>
+        • We showcase new releases and trending products<br>
+        • We help you discover services you might not know about</p>
+      <h3>Price and Availability Information</h3>
+      <p>Product prices and availability change frequently and in real-time. The prices and product information shown on this site reflect data at the time of our last update. For the most current information, we recommend checking the official website of the respective platform before making a purchase.</p>
+      <h3>Content Accuracy</h3>
+      <p>The information provided on this site is for general shopping guidance purposes. Product features, prices, and campaign details may be changed by the respective platforms. We recommend always checking the official website for the most current information.</p>
+      <h3>Disclaimer</h3>
+      <p>The information on this site is provided for general shopping guidance. We do not provide recommendations or guarantees for any products or services. We recommend carefully reviewing product reviews and specifications before making purchasing decisions.</p>
+      <p><strong>Last Updated:</strong> 2026. Changes may be made without prior notice.</p>
+    </div>
+
+    <div class="about-card">
+      <h3><i class="fas fa-balance-scale"></i> Affiliate Disclosure</h3>
+      <p>Some links in this app are affiliate links. If you purchase through them, we may earn a small commission at no extra cost to you. This helps keep the app free.</p>
+    </div>
+
+    <!-- Smart Shopping Secrets + Blog -->
     <div class="content-card">
       <h2>Smart Shopping Secrets</h2>
       <p>Online shopping platforms offer millions of products and services, making them some of the world's largest online marketplaces. However, navigating this vast selection to find the best deals, staying updated on the right campaigns, and getting full value for your money requires a reliable guide.</p>
-
       <div class="highlight-box">
         <h4>What This Guide Offers You</h4>
         <p>• Learn all the advantages of membership programs<br>
@@ -267,17 +422,14 @@ body{background:var(--bg-primary);min-height:100vh;color:var(--text-primary);ove
           • Utilize special services<br>
           • Get tips for safe and advantageous shopping</p>
       </div>
-
-      <p>Below, you'll find official links, campaigns, and special services organized into categories. Expand any category to access all related links and detailed descriptions to enhance your shopping experience.</p>
     </div>
 
-    <!-- Services blog -->
     <div class="content-card">
       <h2>Everything You Need to Know About Shopping Services</h2>
 
       <div class="blog-post">
         <h3>Membership: More Than Just Fast Shipping</h3>
-        <p>While most users know membership programs for their fast and free shipping benefits, these subscription services actually offer much more value than meets the eye. With millions of members worldwide, platforms have continuously expanded their programs to include a comprehensive suite of benefits that go far beyond delivery advantages.</p>
+        <p>While most users know membership programs for their fast and free shipping benefits, these subscription services actually offer much more value than meets the eye.</p>
         <div class="highlight-box">
           <h4>The Hidden Benefits of Membership</h4>
           <p>• <strong>Video Content:</strong> Thousands of movies, TV shows, and original productions<br>
@@ -288,173 +440,74 @@ body{background:var(--bg-primary);min-height:100vh;color:var(--text-primary);ove
             • <strong>Photo Storage:</strong> Unlimited photo backup<br>
             • <strong>Exclusive Discounts:</strong> Member-only savings opportunities</p>
         </div>
-        <p>Membership also gives you access to exclusive deals, early access to sales, and special promotions throughout the year. For frequent shoppers, annual membership offers significant savings compared to monthly billing.</p>
+        <p>Membership also gives you access to exclusive deals, early access to sales, and special promotions throughout the year.</p>
       </div>
 
       <div class="blog-post">
         <h3>Business Solutions: Solutions for Every Size Company</h3>
-        <p>Platforms specifically designed for corporate customers provide tools and features that streamline business purchasing processes. Whether you're a small startup or a large corporation, these platforms offer solutions to make business procurement more efficient and cost-effective.</p>
-        <p>• <strong>Business Pricing:</strong> Get access to quantity discounts and business-only pricing<br>
-          • <strong>Spend Control:</strong> Set purchasing limits and approval workflows for employees<br>
-          • <strong>Tax Exemption:</strong> Easily upload tax exemption certificates for qualified purchases<br>
-          • <strong>Analytics &amp; Reporting:</strong> Detailed purchasing reports to track spending patterns<br>
-          • <strong>Multi-User Accounts:</strong> Share account access while maintaining control</p>
-        <p>These services help companies of all sizes optimize their procurement processes and reduce costs. The platforms integrate seamlessly with existing procurement systems and provide the transparency and control that businesses need.</p>
+        <p>Platforms specifically designed for corporate customers provide tools and features that streamline business purchasing processes.</p>
+        <p>• <strong>Business Pricing:</strong> Quantity discounts and business-only pricing<br>
+          • <strong>Spend Control:</strong> Purchasing limits and approval workflows<br>
+          • <strong>Tax Exemption:</strong> Upload tax exemption certificates<br>
+          • <strong>Analytics &amp; Reporting:</strong> Detailed purchasing reports<br>
+          • <strong>Multi-User Accounts:</strong> Share access while maintaining control</p>
       </div>
 
       <div class="blog-post">
         <h3>Grocery Shopping: Revolutionary Services</h3>
-        <p>Online shopping is transforming the grocery shopping experience. These services combine the convenience of online shopping with the quality and freshness that customers expect from premium grocery experiences.</p>
+        <p>Online shopping is transforming the grocery shopping experience. These services combine convenience with quality and freshness.</p>
         <div class="highlight-box">
           <h4>Benefits of Grocery Services</h4>
-          <p>• <strong>Same-Day Delivery:</strong> Get fresh groceries delivered in hours<br>
-            • <strong>Organic &amp; Quality Options:</strong> High-quality products with premium standards<br>
-            • <strong>Smart Recommendations:</strong> Personalized shopping lists based on your habits<br>
+          <p>• <strong>Same-Day Delivery:</strong> Fresh groceries delivered in hours<br>
+            • <strong>Organic &amp; Quality Options:</strong> Premium standards<br>
+            • <strong>Smart Recommendations:</strong> Personalized shopping lists<br>
             • <strong>Member Discounts:</strong> Exclusive savings for members</p>
         </div>
-        <p>Eligible members can enjoy free grocery delivery, combining logistical expertise with quality reputation, creating a shopping experience that saves time while maintaining high standards for freshness and selection.</p>
       </div>
 
       <div class="blog-post">
         <h3>Unlimited Reading: A World of Books</h3>
-        <p>For book lovers, unlimited reading services represent an exceptional value proposition. For a single monthly fee, subscribers gain unlimited access to over 1 million e-books, thousands of audiobooks, and current magazines. This service is particularly valuable for avid readers who consume multiple books each month.</p>
-        <p><strong>Who is it ideal for?</strong><br>
-          • Readers who finish 2-3+ books per month<br>
-          • Readers who enjoy exploring different genres<br>
-          • Travelers who want to carry multiple books without the weight<br>
-          • Literature enthusiasts looking to discover new authors<br>
-          • Students and researchers needing access to various texts<br>
-          • Families with multiple readers in the household</p>
-        <p>The greatest advantage is that you can read as much as you want without worrying about individual book costs. New titles are added regularly.</p>
+        <p>For book lovers, unlimited reading services represent an exceptional value proposition. For a single monthly fee, subscribers gain unlimited access to over 1 million e-books, thousands of audiobooks, and current magazines.</p>
       </div>
 
       <div class="blog-post">
         <h3>Audiobooks: The Modern Way to Experience Books</h3>
-        <p>Audiobook platforms have revolutionized how people consume literature in our busy modern world. As the largest audiobook platforms, they offer professionally narrated books that can be enjoyed during commutes, workouts, or while multitasking. For those with packed schedules, audiobooks provide a practical way to maintain reading habits.</p>
+        <p>Audiobook platforms have revolutionized how people consume literature in our busy modern world.</p>
         <div class="highlight-box">
           <h4>What Makes Audiobooks Special</h4>
-          <p>• <strong>Professional Narration:</strong> Books performed by professional actors and narrators<br>
-            • <strong>Speed Control:</strong> Adjust listening speed to your preference<br>
-            • <strong>Offline Listening:</strong> Download books for listening without internet<br>
-            • <strong>Original Content:</strong> Exclusive productions available only on these platforms<br>
+          <p>• <strong>Professional Narration:</strong> Books performed by professional actors<br>
+            • <strong>Speed Control:</strong> Adjust listening speed<br>
+            • <strong>Offline Listening:</strong> Download books without internet<br>
+            • <strong>Original Content:</strong> Exclusive productions<br>
             • <strong>Podcast Integration:</strong> Thousands of included podcasts</p>
         </div>
-        <p>With membership, you receive credits each month that can be exchanged for any title regardless of price, and these books remain yours even if you cancel your membership.</p>
-      </div>
-
-      <div class="blog-post">
-        <h3>Main Categories - Your Shopping Headquarters</h3>
-        <p>Main categories represent the core of what makes these platforms such comprehensive shopping destinations. These categories encompass everything from hardware ecosystems to specialized shopping experiences that cater to diverse consumer needs.</p>
-        <div class="highlight-box">
-          <h4>Key Areas in Main Categories</h4>
-          <p>• <strong>Devices:</strong> Smart speakers, tablets, e-readers, and security systems<br>
-            • <strong>Shopping Experiences:</strong> Fresh groceries, luxury brands, discounted products<br>
-            • <strong>Specialized Shopping:</strong> Personalized products, interactive shopping<br>
-            • <strong>Content Services:</strong> Access to audiobooks, music, and video platforms</p>
-        </div>
-        <p>Understanding main categories helps you navigate platforms more efficiently. Basic products offer affordable everyday essentials, while special badges highlight highly-rated, well-priced items ready to ship. The "Trending Now" section shows what's currently popular across all categories.</p>
       </div>
 
       <div class="blog-post">
         <h3>Best Sellers - What Everyone is Buying</h3>
-        <p>Best Sellers lists represent the most purchased items across every category, updated hourly. This real-time ranking provides valuable insights into product popularity, customer preferences, and market trends that can inform your purchasing decisions.</p>
-        <div class="highlight-box">
-          <h4>Why Best Sellers Matter</h4>
-          <p>• <strong>Social Proof:</strong> Products with high sales volume often indicate customer satisfaction<br>
-            • <strong>Trend Identification:</strong> Spot emerging product trends before they become mainstream<br>
-            • <strong>Quality Indicators:</strong> Frequently best-selling items typically represent good value<br>
-            • <strong>Seasonal Awareness:</strong> Track seasonal trends in various categories</p>
-        </div>
-        <p>The Best Sellers page functions as a constantly updated recommendation engine based on actual purchase data. Each product's ranking reflects its sales velocity relative to other items in the same category over a specific time period.</p>
+        <p>Best Sellers lists represent the most purchased items across every category, updated hourly. This real-time ranking provides valuable insights into product popularity and market trends.</p>
       </div>
 
       <div class="blog-post">
         <h3>Rising Trends - Spotting What's Hot</h3>
-        <p>The "Movers &amp; Shakers" section tracks products with the biggest sales gains over the past 24 hours, providing a real-time view of what's gaining momentum. This section is particularly valuable for identifying emerging trends, viral products, and items experiencing sudden popularity spikes.</p>
-        <p>• <strong>Real-Time Insights:</strong> See what's trending right now<br>
-          • <strong>Early Adoption:</strong> Discover products before they hit mainstream awareness<br>
-          • <strong>Seasonal Spikes:</strong> Track products gaining popularity due to seasonal factors<br>
-          • <strong>Influencer Impact:</strong> Often reflects products featured in social media content</p>
-        <p>Products in this section have typically seen significant sales increases relative to their usual sales volume. This could be due to various factors including media coverage, influencer endorsements, seasonal relevance, or price drops.</p>
+        <p>The "Movers &amp; Shakers" section tracks products with the biggest sales gains over the past 24 hours, providing a real-time view of what's gaining momentum.</p>
       </div>
 
       <div class="blog-post">
         <h3>New Releases - First Access to Innovation</h3>
-        <p>New Releases sections showcase recently launched products across all categories, providing early access to innovations, updated models, and fresh content. This section is essential for early adopters, tech enthusiasts, and anyone who wants to stay current with the latest products.</p>
-        <div class="highlight-box">
-          <h4>Benefits of Monitoring New Releases</h4>
-          <p>• <strong>Early Access:</strong> Be among the first to purchase newly available products<br>
-            • <strong>Updated Technology:</strong> Discover the latest models with improved features<br>
-            • <strong>Fresh Content:</strong> Access new books, music, movies, and games as they release<br>
-            • <strong>Innovation Tracking:</strong> Stay informed about product innovations</p>
-        </div>
-        <p>The New Releases section is organized by category and update frequency. For physical products, new releases often represent the latest generations with improved specifications. Many products in this section come with launch promotions or introductory pricing.</p>
+        <p>New Releases sections showcase recently launched products across all categories, providing early access to innovations, updated models, and fresh content.</p>
       </div>
 
       <div class="blog-post">
         <h3>Special Services - Beyond Basic Shopping</h3>
-        <p>Numerous specialized services extend beyond traditional shopping, designed to support specific customer needs throughout various life stages and business requirements. These services demonstrate evolution from simple retail to comprehensive service provision.</p>
-        <p>• <strong>Registry Services:</strong> Wedding and baby registries with completion discounts<br>
-          • <strong>Business Solutions:</strong> Business accounts with tax-exempt shopping and procurement tools<br>
-          • <strong>Accessibility Programs:</strong> Payment card acceptance for qualifying individuals<br>
-          • <strong>Family Services:</strong> Age-appropriate content, children's book subscriptions<br>
-          • <strong>Subscription Management:</strong> Pet food subscriptions, repeat delivery savings</p>
-        <p>These specialized services address specific pain points in traditional shopping and life management. Registry services simplify gift coordination for major life events. Business accounts transform how companies procure supplies. Accessibility programs ensure convenience and value are available to broader audiences. Together, these services create more personalized experiences tailored to individual circumstances and needs.</p>
-      </div>
-    </div>
-
-    <!-- About our service + info modal content -->
-    <div class="content-card">
-      <h2>Information</h2>
-
-      <div class="highlight-box">
-        <h3>About This Site</h3>
-        <p>We created this site to help shoppers discover the best products and services available online. Our team carefully selects and organizes links to various shopping platforms to make your experience easier and more enjoyable.</p>
-      </div>
-
-      <h3>Our Mission: Helping You Find the Best Deals</h3>
-      <p>Our primary goal is to help you discover the vast selection of products, services, and special offers available online. We curated these links to make your shopping experience more convenient and to highlight interesting campaigns and promotions you might otherwise miss.</p>
-
-      <h3>How We Help You Save</h3>
-      <p>• We organize extensive product catalogs into easy-to-navigate categories<br>
-        • We highlight special promotions and limited-time offers<br>
-        • We provide detailed descriptions to help you make informed decisions<br>
-        • We showcase new releases and trending products<br>
-        • We help you discover services you might not know about</p>
-
-      <h3>Price and Availability Information</h3>
-      <p>Product prices and availability change frequently and in real-time. The prices and product information shown on this site reflect data at the time of our last update. For the most current information, we recommend checking the official website of the respective platform before making a purchase.</p>
-
-      <h3>Content Accuracy</h3>
-      <p>The information provided on this site is for general shopping guidance purposes. Product features, prices, and campaign details may be changed by the respective platforms. We recommend always checking the official website for the most current information.</p>
-
-      <h3>Terms of Use</h3>
-      <p>By using this site, you agree to the following terms:</p>
-      <ul>
-        <li>This site is for informational purposes only</li>
-        <li>The terms of service and privacy policies of the respective platforms apply</li>
-        <li>Your purchasing decisions are your own responsibility</li>
-        <li>Users under 18 should use this site under adult supervision</li>
-      </ul>
-
-      <h3>Disclaimer</h3>
-      <p>The information on this site is provided for general shopping guidance. We do not provide recommendations or guarantees for any products or services. We recommend carefully reviewing product reviews and specifications before making purchasing decisions.</p>
-
-      <p><strong>Last Updated:</strong> This page was last updated in 2026. Changes may be made without prior notice.</p>
-    </div>
-
-    <div class="about-card">
-      <h3><i class="fas fa-balance-scale"></i> Affiliate Disclosure</h3>
-      <p>Some links in this app are affiliate links. If you purchase through them, we may earn a small commission at no extra cost to you. This helps keep the app free.</p>
-      <div class="disclosure">
-        <strong>Important:</strong> Product prices and stock availability may vary. Always check current information before purchasing. Users under 18 should use under parental supervision.
+        <p>Numerous specialized services extend beyond traditional shopping, designed to support specific customer needs throughout various life stages and business requirements.</p>
       </div>
     </div>
   </section>
 
 </main>
 
-<!-- ===== BOTTOM NAV ===== -->
+<!-- BOTTOM NAV -->
 <nav class="bottom-nav">
   <div class="nav-item active" data-view="home"><i class="fas fa-home"></i><span>Home</span></div>
   <div class="nav-item" data-view="cats"><i class="fas fa-th-large"></i><span>Categories</span></div>
@@ -462,12 +515,82 @@ body{background:var(--bg-primary);min-height:100vh;color:var(--text-primary);ove
   <div class="nav-item" data-view="about"><i class="fas fa-info-circle"></i><span>About</span></div>
 </nav>
 
-<!-- ===== TOAST ===== -->
+<!-- TOAST -->
 <div class="toast" id="toast"><i class="fas fa-check-circle"></i><span id="toastMsg">Copied!</span></div>
+
+<!-- ========== SETTINGS MODAL ========== -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2><i class="fas fa-cog"></i> Settings</h2>
+      <button class="modal-close" data-close="settingsModal"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body">
+      <div class="settings-group">
+        <label>Language</label>
+        <div class="option-row">
+          <button class="opt-btn active" data-lang="en"><i class="fas fa-globe"></i> English</button>
+          <button class="opt-btn" data-lang="tr"><i class="fas fa-globe"></i> Türkçe</button>
+        </div>
+      </div>
+      <div class="settings-group">
+        <label>Theme</label>
+        <div class="option-row">
+          <button class="opt-btn active" data-theme="dark"><i class="fas fa-moon"></i> Dark</button>
+          <button class="opt-btn" data-theme="light"><i class="fas fa-sun"></i> Light</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========== PRIVACY MODAL ========== -->
+<div class="modal-overlay" id="privacyModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2><i class="fas fa-shield-alt"></i> Privacy Policy</h2>
+      <button class="modal-close" data-close="privacyModal"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" id="privacyContent">
+      <!-- BURAYA PRIVACY POLICY YAZACAKSIN -->
+      <p><em>[Write your Privacy Policy content here.]</em></p>
+      <p>This app does not collect personal information directly. Third-party services may collect anonymous usage data. All purchases are made on external platforms subject to their own privacy policies.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== TERMS MODAL ========== -->
+<div class="modal-overlay" id="termsModal">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2><i class="fas fa-gavel"></i> Terms &amp; Conditions</h2>
+      <button class="modal-close" data-close="termsModal"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="modal-body" id="termsContent">
+      <!-- BURAYA TERMS & CONDITIONS YAZACAKSIN -->
+      <p><em>[Write your Terms &amp; Conditions content here.]</em></p>
+      <p>By using this app, you agree to the following terms:</p>
+      <ul>
+        <li>This app is for informational purposes only</li>
+        <li>Third-party platform terms and privacy policies apply</li>
+        <li>Your purchasing decisions are your own responsibility</li>
+        <li>Users under 18 should use this app under adult supervision</li>
+      </ul>
+    </div>
+  </div>
+</div>
 
 <script>
 /* =========================================================
-   VERİ — SENİN GÖNDERDİĞİN KODDAN AYNEN KORUNDU
+   KONFIGÜRASYON — KENDİ BİLGİLERİNİ BURAYA YAZ
+   ========================================================= */
+const CONFIG = {
+  playStoreUrl: "https://play.google.com/store/apps/details?id=YOUR_PACKAGE_NAME", // ← Google Play linkini koy
+  contactEmail: "aastudio42@gmail.com"
+};
+
+/* =========================================================
+   VERİ — ORİJİNAL KODDAN AYNEN KORUNDU (182 link)
    ========================================================= */
 const linksData = {
   cat1Links: [
@@ -666,23 +789,54 @@ const linksData = {
   ]
 };
 
-/* Kategori meta verisi (orijinal koddan) */
+/* Kategori meta (orijinal) */
 const categoriesMeta = [
-  { key: "cat1Links", dataKey: "main",      icon: "fas fa-home",    title: "Main Categories",      subtitle: "Essential services and primary shopping categories", description: "<p><strong>Our Analysis:</strong> We tested over 50 different smart home devices and shopping services. These main categories offer the best value for most households. From the convenience of smart devices to the freshness of grocery delivery, these are the services we recommend.</p><p><strong>Team Recommendation:</strong> Start with the smart devices section if you're new to home automation - it's the easiest way to automate daily routines. For grocery shoppers, the fresh food links will save hours of in-store shopping time each week.</p>" },
-  { key: "cat2Links", dataKey: "membership", icon: "fas fa-crown",   title: "Membership Programs",  subtitle: "Membership and subscription services", description: "<p><strong>Our Research:</strong> We compared all major membership programs side-by-side to find the best value. Premium memberships save the average household $300+ per year on shipping alone, not including streaming benefits. For students, young adult programs offer the same benefits at half the price.</p><p><strong>Strategy We Recommend:</strong> Always start with free trials (links provided) to test the services. The 30-day trial is perfect for holiday shopping, while 3-month trials let you fully experience the service before committing.</p>" },
-  { key: "cat3Links", dataKey: "bestsellers", icon: "fas fa-trophy", title: "Best Sellers",         subtitle: "Most popular products and categories", description: "<p><strong>Our Data Shows:</strong> We track best-seller rankings weekly. These consistently top the charts. The \"All Departments\" link shows what millions of others are buying right now - a reliable indicator of quality and value. The devices section is particularly active with the latest releases.</p><p><strong>Smart Shopping Tip:</strong> Check the best sellers before making any major purchase. If a product is in the top 10 of its category, thousands of customers have vetted it. We use this method for all electronics and kitchen appliances.</p>" },
-  { key: "cat4Links", dataKey: "trends",      icon: "fas fa-chart-line", title: "Rising Trends",    subtitle: "Fastest rising products and trending categories", description: "<p><strong>What We're Seeing:</strong> Based on our daily monitoring, the rising trends section shows viral products before they sell out. In the last month alone, we've seen portable power stations, air purifiers, and smart bird feeders climb 500%+ in sales.</p><p><strong>Our Warning:</strong> Products in this category often sell out within days. If you see something you like, don't wait. The \"All Departments\" link shows the biggest gainers across every category updated in real-time.</p>" },
-  { key: "cat5Links", dataKey: "newreleases", icon: "fas fa-bell",    title: "New Releases",         subtitle: "Newly launched products and categories", description: "<p><strong>Be the First:</strong> Our team always checks new releases before anyone else. The latest devices, new book releases, and fresh product lines appear here first. We've identified products that later became bestsellers.</p><p><strong>Gift Idea:</strong> New releases make excellent gifts because they're less likely to be already owned. The books section is updated daily with new titles - perfect for book lovers. We recently discovered amazing new authors this way.</p>" },
-  { key: "cat6Links", dataKey: "services",    icon: "fas fa-cogs",    title: "Other Services",       subtitle: "Registration, business, and other special services", description: "<p><strong>Hidden Gems We Found:</strong> These services are often overlooked but incredibly useful. Baby and wedding registries save hundreds on events. For small business owners, business accounts offer tax-exempt purchasing and spending controls.</p><p><strong>Did You Know?</strong> Assistance programs and kids+ services provide significant discounts for eligible families. We've helped many readers save on essentials through these programs. The member exclusives section has deals you won't find anywhere else.</p>" }
+  { key: "cat1Links", dataKey: "main", icon: "fas fa-home", title: "Main Categories", subtitle: "Essential services and primary shopping categories", description: "<p><strong>Our Analysis:</strong> We tested over 50 different smart home devices and shopping services. These main categories offer the best value for most households.</p><p><strong>Team Recommendation:</strong> Start with the smart devices section if you're new to home automation - it's the easiest way to automate daily routines.</p>" },
+  { key: "cat2Links", dataKey: "membership", icon: "fas fa-crown", title: "Membership Programs", subtitle: "Membership and subscription services", description: "<p><strong>Our Research:</strong> We compared all major membership programs side-by-side to find the best value. Premium memberships save the average household $300+ per year on shipping alone.</p><p><strong>Strategy We Recommend:</strong> Always start with free trials (links provided) to test the services.</p>" },
+  { key: "cat3Links", dataKey: "bestsellers", icon: "fas fa-trophy", title: "Best Sellers", subtitle: "Most popular products and categories", description: "<p><strong>Our Data Shows:</strong> We track best-seller rankings weekly. These consistently top the charts.</p><p><strong>Smart Shopping Tip:</strong> Check the best sellers before making any major purchase.</p>" },
+  { key: "cat4Links", dataKey: "trends", icon: "fas fa-chart-line", title: "Rising Trends", subtitle: "Fastest rising products and trending categories", description: "<p><strong>What We're Seeing:</strong> Based on our daily monitoring, the rising trends section shows viral products before they sell out.</p><p><strong>Our Warning:</strong> Products in this category often sell out within days.</p>" },
+  { key: "cat5Links", dataKey: "newreleases", icon: "fas fa-bell", title: "New Releases", subtitle: "Newly launched products and categories", description: "<p><strong>Be the First:</strong> Our team always checks new releases before anyone else.</p><p><strong>Gift Idea:</strong> New releases make excellent gifts because they're less likely to be already owned.</p>" },
+  { key: "cat6Links", dataKey: "services", icon: "fas fa-cogs", title: "Other Services", subtitle: "Registration, business, and other special services", description: "<p><strong>Hidden Gems We Found:</strong> These services are often overlooked but incredibly useful.</p><p><strong>Did You Know?</strong> Assistance programs and kids+ services provide significant discounts for eligible families.</p>" }
 ];
 
-/* PROMOSYON KODLARI — buraya kendi kodlarını ekle */
+/* =========================================================
+   AMAZON ANA KATEGORİLERİ (CATEGORIES sekmesinde gösterilecek)
+   Sen bu linkleri kendi affiliate linklerinle değiştir.
+   ========================================================= */
+const amazonCategories = [
+  { name: "Electronics",          icon: "fas fa-plug",           link: "https://www.amazon.com.tr/b?node=12466497031" },
+  { name: "Computers",            icon: "fas fa-desktop",        link: "https://www.amazon.com.tr/b?node=12466496031" },
+  { name: "Cell Phones",          icon: "fas fa-mobile-alt",     link: "https://www.amazon.com.tr/b?node=12466490031" },
+  { name: "Fashion",              icon: "fas fa-tshirt",         link: "https://www.amazon.com.tr/b?node=12466495031" },
+  { name: "Shoes",                icon: "fas fa-shoe-prints",    link: "https://www.amazon.com.tr/b?node=12466501031" },
+  { name: "Home & Kitchen",       icon: "fas fa-home",           link: "https://www.amazon.com.tr/b?node=12466502031" },
+  { name: "Books",                icon: "fas fa-book",           link: "https://www.amazon.com.tr/b?node=12466503031" },
+  { name: "Toys & Games",         icon: "fas fa-puzzle-piece",   link: "https://www.amazon.com.tr/b?node=12466504031" },
+  { name: "Sports & Outdoors",    icon: "fas fa-futbol",         link: "https://www.amazon.com.tr/b?node=12466505031" },
+  { name: "Beauty",               icon: "fas fa-spa",            link: "https://www.amazon.com.tr/b?node=12466506031" },
+  { name: "Health",               icon: "fas fa-heartbeat",      link: "https://www.amazon.com.tr/b?node=12466507031" },
+  { name: "Baby",                 icon: "fas fa-baby",           link: "https://www.amazon.com.tr/b?node=12466508031" },
+  { name: "Pet Supplies",         icon: "fas fa-paw",            link: "https://www.amazon.com.tr/b?node=12466509031" },
+  { name: "Automotive",           icon: "fas fa-car",            link: "https://www.amazon.com.tr/b?node=12466510031" },
+  { name: "Garden & Outdoor",     icon: "fas fa-tree",           link: "https://www.amazon.com.tr/b?node=12466511031" },
+  { name: "Tools & DIY",          icon: "fas fa-tools",          link: "https://www.amazon.com.tr/b?node=12466512031" },
+  { name: "Office Products",      icon: "fas fa-briefcase",      link: "https://www.amazon.com.tr/b?node=12466513031" },
+  { name: "Grocery",              icon: "fas fa-utensils",       link: "https://www.amazon.com.tr/b?node=12466514031" },
+  { name: "Video Games",          icon: "fas fa-gamepad",        link: "https://www.amazon.com.tr/b?node=12466515031" },
+  { name: "Music",                icon: "fas fa-music",          link: "https://www.amazon.com.tr/b?node=12466516031" },
+  { name: "Movies & TV",          icon: "fas fa-film",           link: "https://www.amazon.com.tr/b?node=12466517031" },
+  { name: "Jewelry",              icon: "fas fa-gem",            link: "https://www.amazon.com.tr/b?node=12466518031" },
+  { name: "Watches",              icon: "fas fa-clock",          link: "https://www.amazon.com.tr/b?node=12466519031" },
+  { name: "Luggage",              icon: "fas fa-suitcase",       link: "https://www.amazon.com.tr/b?node=12466520031" }
+];
+
+/* PROMOSYONLAR */
 const promoData = [
-  { id: 1, code: "INDIRIM20",  description: "Tüm elektronik ürünlerde %20 indirim. Minimum 500 TL alışveriş.", category: "Electronics", expiry: "2026-12-31" },
-  { id: 2, code: "MODA15",     description: "Moda kategorisinde geçerli %15 indirim kuponu.",                   category: "Fashion",     expiry: "2026-11-30" },
-  { id: 3, code: "EVDE10",     description: "Ev & yaşam ürünlerinde %10 indirim. İlk alışverişe özel.",         category: "Home",        expiry: "2026-12-15" },
-  { id: 4, code: "KOZMETIK25", description: "Kozmetik ürünlerinde %25 indirim. Seçili markalarda geçerli.",     category: "Beauty",      expiry: "2026-11-20" },
-  { id: 5, code: "SPOR50",     description: "Spor ürünlerinde 50 TL indirim. Minimum 300 TL.",                  category: "Sports",      expiry: "2026-12-01" }
+  { id: 1, code: "INDIRIM20",  description: "20% off on all electronics. Minimum 500 TL purchase.", category: "Electronics", expiry: "2026-12-31" },
+  { id: 2, code: "MODA15",     description: "15% off on fashion category.",                         category: "Fashion",     expiry: "2026-11-30" },
+  { id: 3, code: "EVDE10",     description: "10% off on home & living. First purchase only.",       category: "Home",        expiry: "2026-12-15" },
+  { id: 4, code: "KOZMETIK25", description: "25% off on beauty products. Selected brands.",         category: "Beauty",      expiry: "2026-11-20" },
+  { id: 5, code: "SPOR50",     description: "50 TL off on sports products. Minimum 300 TL.",        category: "Sports",      expiry: "2026-12-01" }
 ];
 
 /* =========================================================
@@ -702,7 +856,7 @@ function showToast(msg){
 }
 
 /* ---- COPY ---- */
-async function copyText(text, btn, successMsg){
+async function copyText(text, successMsg){
   try{ await navigator.clipboard.writeText(text); }
   catch(e){
     const ta = document.createElement('textarea');
@@ -711,13 +865,9 @@ async function copyText(text, btn, successMsg){
     document.body.removeChild(ta);
   }
   showToast(successMsg || 'Copied! ✓');
-  if(btn){
-    btn.classList.add('copied');
-    setTimeout(()=> btn.classList.remove('copied'), 1500);
-  }
 }
 
-/* ---- DATE HELPERS ---- */
+/* ---- DATE ---- */
 function formatDate(d){
   try{
     const dt = new Date(d);
@@ -730,7 +880,7 @@ function daysLeft(d){
   return Math.round((dt - now) / 86400000);
 }
 
-/* ---- RENDER: LINK ITEM ---- */
+/* ---- LINK ITEM ---- */
 function renderLinkItem(item){
   const el = document.createElement('div');
   el.className = 'link-item';
@@ -740,28 +890,27 @@ function renderLinkItem(item){
       <div>${item.text}</div>
       <span class="link-description">${item.description || ''}</span>
     </div>
-    <div class="link-actions">
-      <div class="share-btn" title="Copy link"><i class="fas fa-share-alt"></i></div>
-    </div>
+    <div class="link-actions"><div class="share-btn" title="Copy link"><i class="fas fa-share-alt"></i></div></div>
     <div class="link-arrow"><i class="fas fa-chevron-right"></i></div>
   `;
   el.addEventListener('click', e=>{
     if(!e.target.closest('.share-btn')) window.open(item.link, '_blank');
   });
-  const shareBtn = el.querySelector('.share-btn');
-  shareBtn.addEventListener('click', e=>{
+  const sb = el.querySelector('.share-btn');
+  sb.addEventListener('click', e=>{
     e.stopPropagation();
-    copyText(item.link, shareBtn, 'Link copied! ✓');
+    copyText(item.link, 'Link copied! ✓');
+    sb.classList.add('copied');
+    setTimeout(()=> sb.classList.remove('copied'), 1500);
   });
   return el;
 }
 
-/* ---- RENDER: CATEGORY (accordion) ---- */
+/* ---- CATEGORY CARD ---- */
 function renderCategoryCard(meta, container){
   const links = linksData[meta.key] || [];
   const card = document.createElement('div');
   card.className = 'category';
-  card.setAttribute('data-category', meta.dataKey);
   card.innerHTML = `
     <div class="category-header">
       <div class="category-title">
@@ -774,43 +923,33 @@ function renderCategoryCard(meta, container){
       <div class="toggle-icon"><i class="fas fa-chevron-down"></i></div>
     </div>
     <div class="category-description">${meta.description}</div>
-    <div class="links-container">
-      <div class="links-grid"></div>
-    </div>
+    <div class="links-container"><div class="links-grid"></div></div>
   `;
   const grid = card.querySelector('.links-grid');
-  links.forEach(link=> grid.appendChild(renderLinkItem(link)));
+  links.forEach(l => grid.appendChild(renderLinkItem(l)));
   card.querySelector('.category-header').addEventListener('click', ()=>{
-    const isActive = card.classList.contains('active');
-    if(!isActive){
+    if(!card.classList.contains('active')){
       card.classList.add('active');
       setTimeout(()=> card.scrollIntoView({behavior:'smooth', block:'start'}), 200);
-    } else {
-      card.classList.remove('active');
-    }
+    } else card.classList.remove('active');
   });
   container.appendChild(card);
 }
 
-/* ---- RENDER: HOME CATEGORIES ---- */
+/* ---- HOME ---- */
 let homeCatFilter = 'all';
 let homeSearch = '';
-
 function renderHomeCategories(){
   const wrap = $('#homeCategories');
   wrap.innerHTML = '';
   let list = categoriesMeta;
-  if(homeCatFilter !== 'all'){
-    list = list.filter(m => m.key === homeCatFilter);
-  }
+  if(homeCatFilter !== 'all') list = list.filter(m => m.key === homeCatFilter);
   if(homeSearch){
     const q = homeSearch.toLowerCase();
     list = list.filter(m => {
       if(m.title.toLowerCase().includes(q) || m.subtitle.toLowerCase().includes(q)) return true;
       return (linksData[m.key] || []).some(l =>
-        l.text.toLowerCase().includes(q) ||
-        (l.description || '').toLowerCase().includes(q)
-      );
+        l.text.toLowerCase().includes(q) || (l.description||'').toLowerCase().includes(q));
     });
   }
   $('#homeCount').textContent = list.length;
@@ -818,58 +957,60 @@ function renderHomeCategories(){
     wrap.innerHTML = `<div class="empty"><i class="fas fa-search"></i><p>No results found</p></div>`;
     return;
   }
-  list.forEach(meta => renderCategoryCard(meta, wrap));
+  list.forEach(m => renderCategoryCard(m, wrap));
 }
-
-/* ---- RENDER: ALL CATEGORIES VIEW ---- */
-function renderCatView(){
-  const wrap = $('#catList');
-  wrap.innerHTML = '';
-  categoriesMeta.forEach(meta => renderCategoryCard(meta, wrap));
-}
-
-/* ---- RENDER: HOME CHIPS ---- */
 function buildHomeChips(){
   const wrap = $('#homeChips');
   wrap.innerHTML = '';
-  const opts = [{key:'all', label:'All'}].concat(categoriesMeta.map(m => ({key:m.key, label:m.title})));
-  opts.forEach(o => {
-    const chip = document.createElement('div');
-    chip.className = 'chip' + (o.key === homeCatFilter ? ' active' : '');
-    chip.textContent = o.label;
-    chip.addEventListener('click', ()=>{
+  const opts = [{key:'all',label:'All'}].concat(categoriesMeta.map(m=>({key:m.key,label:m.title})));
+  opts.forEach(o=>{
+    const c = document.createElement('div');
+    c.className = 'chip' + (o.key === homeCatFilter ? ' active' : '');
+    c.textContent = o.label;
+    c.addEventListener('click', ()=>{
       homeCatFilter = o.key;
       buildHomeChips();
       renderHomeCategories();
     });
-    wrap.appendChild(chip);
+    wrap.appendChild(c);
   });
 }
 
-/* ---- RENDER: PROMO ---- */
-function getPromoCategories(){
-  return [...new Set(promoData.map(p => p.category))];
-}
-let promoCatFilter = 'all';
-let promoSearch = '';
-
-function buildPromoChips(){
-  const wrap = $('#promoChips');
+/* ---- HOME PROMOS (kısa önizleme) ---- */
+function renderHomePromos(){
+  const wrap = $('#homePromos');
   wrap.innerHTML = '';
-  const opts = [{key:'all', label:'All'}].concat(getPromoCategories().map(c => ({key:c, label:c})));
-  opts.forEach(o => {
-    const chip = document.createElement('div');
-    chip.className = 'chip' + (o.key === promoCatFilter ? ' active' : '');
-    chip.textContent = o.label;
-    chip.addEventListener('click', ()=>{
-      promoCatFilter = o.key;
-      buildPromoChips();
-      renderPromos();
-    });
-    wrap.appendChild(chip);
+  promoData.slice(0,3).forEach(p => wrap.appendChild(renderPromoCard(p)));
+}
+
+/* ---- CATEGORIES (Amazon) ---- */
+let catSearch = '';
+function renderAzGrid(){
+  const wrap = $('#azGrid');
+  wrap.innerHTML = '';
+  let list = amazonCategories;
+  if(catSearch){
+    const q = catSearch.toLowerCase();
+    list = list.filter(c => c.name.toLowerCase().includes(q));
+  }
+  if(!list.length){
+    wrap.innerHTML = `<div class="empty" style="grid-column:1/-1"><i class="fas fa-search"></i><p>No categories found</p></div>`;
+    return;
+  }
+  list.forEach(c=>{
+    const tile = document.createElement('div');
+    tile.className = 'az-tile';
+    tile.innerHTML = `
+      <div class="az-ico"><i class="${c.icon}"></i></div>
+      <div class="az-name">${c.name}</div>
+      <div class="az-count">Tap to shop</div>
+    `;
+    tile.addEventListener('click', ()=> window.open(c.link, '_blank'));
+    wrap.appendChild(tile);
   });
 }
 
+/* ---- PROMO ---- */
 function renderPromoCard(p){
   const dl = daysLeft(p.expiry);
   const soon = dl >= 0 && dl <= 7;
@@ -888,15 +1029,13 @@ function renderPromoCard(p){
     <div class="promo-desc">${p.description}</div>
     <div class="promo-code-row">
       <div class="promo-code">${p.code}</div>
-      <button class="promo-copy" ${expired?'disabled':''}>
-        <i class="fas fa-copy"></i> Copy
-      </button>
+      <button class="promo-copy" ${expired?'disabled':''}><i class="fas fa-copy"></i> Copy</button>
     </div>
   `;
   const btn = el.querySelector('.promo-copy');
   if(!expired){
     btn.addEventListener('click', ()=>{
-      copyText(p.code, null, 'Code copied! ✓');
+      copyText(p.code, 'Code copied! ✓');
       btn.classList.add('copied');
       btn.innerHTML = '<i class="fas fa-check"></i> Copied';
       setTimeout(()=>{
@@ -908,6 +1047,25 @@ function renderPromoCard(p){
   return el;
 }
 
+function getPromoCategories(){ return [...new Set(promoData.map(p=>p.category))]; }
+let promoCatFilter = 'all';
+let promoSearch = '';
+function buildPromoChips(){
+  const wrap = $('#promoChips');
+  wrap.innerHTML = '';
+  const opts = [{key:'all',label:'All'}].concat(getPromoCategories().map(c=>({key:c,label:c})));
+  opts.forEach(o=>{
+    const c = document.createElement('div');
+    c.className = 'chip' + (o.key === promoCatFilter ? ' active' : '');
+    c.textContent = o.label;
+    c.addEventListener('click', ()=>{
+      promoCatFilter = o.key;
+      buildPromoChips();
+      renderPromos();
+    });
+    wrap.appendChild(c);
+  });
+}
 function renderPromos(){
   const wrap = $('#promoList');
   wrap.innerHTML = '';
@@ -918,8 +1076,7 @@ function renderPromos(){
     list = list.filter(p =>
       p.code.toLowerCase().includes(q) ||
       p.description.toLowerCase().includes(q) ||
-      p.category.toLowerCase().includes(q)
-    );
+      p.category.toLowerCase().includes(q));
   }
   if(!list.length){
     wrap.innerHTML = `<div class="empty"><i class="fas fa-ticket-alt"></i><p>No promo codes found</p></div>`;
@@ -928,35 +1085,90 @@ function renderPromos(){
   list.forEach(p => wrap.appendChild(renderPromoCard(p)));
 }
 
-/* ---- NAVIGATION ---- */
+/* ---- NAV ---- */
 function switchView(name){
   $$('.view').forEach(v => v.classList.remove('active'));
   $$('.nav-item').forEach(n => n.classList.remove('active'));
-  const target = $('#view-' + name);
-  if(target) target.classList.add('active');
+  const t = $('#view-' + name);
+  if(t) t.classList.add('active');
   const nav = document.querySelector(`.nav-item[data-view="${name}"]`);
   if(nav) nav.classList.add('active');
   window.scrollTo({top:0, behavior:'smooth'});
 }
-
 $$('.nav-item').forEach(n => n.addEventListener('click', ()=> switchView(n.dataset.view)));
-$('#headerInfoBtn').addEventListener('click', ()=> switchView('about'));
 
-/* ---- SEARCH LISTENERS ---- */
-$('#searchHome').addEventListener('input', e=>{
-  homeSearch = e.target.value.trim();
-  renderHomeCategories();
+/* ---- SEARCH ---- */
+$('#searchHome').addEventListener('input', e=>{ homeSearch = e.target.value.trim(); renderHomeCategories(); });
+$('#searchPromo').addEventListener('input', e=>{ promoSearch = e.target.value.trim(); renderPromos(); });
+$('#searchCat').addEventListener('input', e=>{ catSearch = e.target.value.trim(); renderAzGrid(); });
+
+/* ---- MODAL HELPERS ---- */
+function openModal(id){
+  const m = document.getElementById(id);
+  if(m){ m.classList.add('active'); document.body.style.overflow = 'hidden'; }
+}
+function closeModal(id){
+  const m = document.getElementById(id);
+  if(m){ m.classList.remove('active'); document.body.style.overflow = ''; }
+}
+$$('.modal-close').forEach(b => b.addEventListener('click', ()=> closeModal(b.dataset.close)));
+$$('.modal-overlay').forEach(o => o.addEventListener('click', e=>{
+  if(e.target === o) closeModal(o.id);
+}));
+
+/* ---- SETTINGS ---- */
+$('#settingsBtn').addEventListener('click', ()=> openModal('settingsModal'));
+
+/* theme */
+function setTheme(t){
+  if(t === 'light') document.body.classList.add('light');
+  else document.body.classList.remove('light');
+  $$('.opt-btn[data-theme]').forEach(b=> b.classList.toggle('active', b.dataset.theme === t));
+  const meta = $('#themeColorMeta');
+  if(meta) meta.setAttribute('content', t === 'light' ? '#f5f6f8' : '#0f1115');
+  try{ localStorage.setItem('aps_theme', t); }catch(_){}
+}
+$$('.opt-btn[data-theme]').forEach(b=> b.addEventListener('click', ()=> setTheme(b.dataset.theme)));
+
+/* lang (görsel) */
+$$('.opt-btn[data-lang]').forEach(b=> b.addEventListener('click', ()=>{
+  $$('.opt-btn[data-lang]').forEach(x=> x.classList.remove('active'));
+  b.classList.add('active');
+  try{ localStorage.setItem('aps_lang', b.dataset.lang); }catch(_){}
+  showToast('Language: ' + b.textContent.trim());
+}));
+
+/* ---- ABOUT ACTIONS ---- */
+$('#starsRow').addEventListener('click', e=>{
+  const btn = e.target.closest('.star-btn');
+  if(!btn) return;
+  const n = +btn.dataset.star;
+  $$('.star-btn').forEach(s=> s.classList.toggle('active', +s.dataset.star <= n));
+  setTimeout(()=>{
+    window.open(CONFIG.playStoreUrl, '_blank');
+  }, 300);
 });
-$('#searchPromo').addEventListener('input', e=>{
-  promoSearch = e.target.value.trim();
-  renderPromos();
+
+$('#copyMailBtn').addEventListener('click', e=>{
+  copyText(CONFIG.contactEmail, 'Email copied! ✓');
+  e.currentTarget.classList.add('copied');
+  setTimeout(()=> e.currentTarget.classList.remove('copied'), 1500);
 });
+
+$('#openPrivacyBtn').addEventListener('click', ()=> openModal('privacyModal'));
+$('#openTermsBtn').addEventListener('click', ()=> openModal('termsModal'));
 
 /* ---- INIT ---- */
 document.addEventListener('DOMContentLoaded', ()=>{
+  // restore theme
+  let savedTheme = 'dark';
+  try{ savedTheme = localStorage.getItem('aps_theme') || 'dark'; }catch(_){}
+  setTheme(savedTheme);
+
   buildHomeChips();
   renderHomeCategories();
-  renderCatView();
+  renderHomePromos();
+  renderAzGrid();
   buildPromoChips();
   renderPromos();
 });
